@@ -41,3 +41,6 @@ map.construct = function()
         --love.graphics.dra
     end
 end
+
+map.hierarchicalRender = function()
+end

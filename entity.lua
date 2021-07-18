@@ -72,6 +72,20 @@ function entity:propel(x,y)
     self.body:applyForce(x,y)
 end
 
+function entity:performMotion(label)
+    if(label == 'thrust')then
+        vec = vector.getAngleVector(self:getProperty('rotation'))
+        self:propel(vec.x*4,vec.y*4)
+    elseif(label == 'brake')then
+        vec = vector.getAngleVector(self:getProperty('rotation'))
+        self:propel(vec.x*-4,vec.y*-4)
+    elseif(label == 'rotL')then
+        self:moveRotate()
+    elseif(label == 'rotR')then
+        self:moveRotate(true)
+    end
+end
+
 -- Properties
 
 function entity:setProperty(label, value)

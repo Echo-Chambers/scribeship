@@ -17,19 +17,7 @@ function love.update(dt)
     end
     -- SHUTDOWN CHECK
     local ent = entities[1]
-    local body = entities[1].body
-    if love.keyboard.isDown("right") then --press the right arrow key to push the ball to the right
-        ent:moveRotate(true)
-        elseif love.keyboard.isDown("left") then --press the left arrow key to push the ball to the left
-            ent:moveRotate(false)
-        elseif love.keyboard.isDown("up") then --press the up arrow key to set the ball in the air
-            vec = vector.getAngleVector(ent:getProperty('rotation'))
-            body:applyForce(vec.x*4,vec.y*4)
-        elseif love.keyboard.isDown("down") then --press the up arrow key to set the ball in the air
-            vec = vector.getAngleVector(ent:getProperty('rotation'))
-            body:applyForce(vec.x*-4,vec.y*-4)
-    end
-
+    ent:processControl()
 
 end
 
