@@ -1,10 +1,12 @@
 entities = {}
 entity = {
-    id2 = "gg",
     type = 'blank',
     properties = {
-        rotation = 0
+        rotation = 0,
+        offset = {x = 0, y = 0},
+        scale = {x = 1, y = 1}
     },
+    layer = 1,
     events = {},
     position = {x = 0, y = 0},
 }
@@ -23,6 +25,9 @@ function entity:new(data)
     return num
 end
 
+function entity:getid()
+    return self.id
+end
 
 -- LOVE PHYSICS Wrappers
 
@@ -53,11 +58,16 @@ end
 
 
 function entity:getPosition()
-    local x,y = self.body:getPosition()
+    local x,y
+    if(self.body)then
+        x,y = self.body:getPosition()
+    else x,y = self.position.x, self.position.y 
+    end
     return {x = x, y = y}
 end
 
-
+function entity:setPosition()
+end
 -- Motion and Rotation
 
 function entity:moveRotate(bool)
@@ -94,4 +104,17 @@ end
 
 function entity:getProperty(label)
     return self.properties[label]
+end
+
+-- Visual
+
+function entity:render()
+    if(self.type ~= 'blank' and self.properties.texture)then
+        local tex = self:getProperty("texture")
+        local pos = self:getPosition()
+        local rot = self:getProperty('rotation')
+        local scale = self:getProperty('scale') or {x = 1, y = 1}
+        local off = self:getProperty('offset')
+        love.graphics.draw(tex, pos.x, pos.y, rot, scale.x, scale.y, off.x, off.y)
+    end
 end

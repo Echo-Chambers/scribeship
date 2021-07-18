@@ -33,14 +33,30 @@ end
 -- MAP RENDERING
 
 map.construct = function()
-    local w = self.width
-    local h = self.height
+    local w = map.width
+    local h = map.height
 
-    for i = 1, #self.objects do -- change for dual table reference
+    for i = 1, 6 do
+        map.objects[i] = {}
+    end
+    --[[for i = 1, #self.objects do -- change for dual table reference
         local obj = self.objects[i][1]
         --love.graphics.dra
-    end
+    end]]
+end
+map.construct()
+
+map.registerMapObject = function(id) -- provide entity id
+    local ent = entities[id]
+    local layer = ent.layer
+    map.objects[layer][id] = ent
 end
 
 map.hierarchicalRender = function()
+    for i = 1, #map.objects do
+        local layer = map.objects[i]
+        for k,v in pairs(layer) do
+            v:render()
+        end
+    end
 end

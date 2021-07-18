@@ -1,13 +1,16 @@
 player = {
     type = "player",
+    layer = 2,
     properties = {
-        rotation = 0
+        rotation = 0,
+        texture = image.player,
+        offset = {x = 32,y = 32}
     }
 }
 
 player = entity:new(player)
 player = entities[player]
-
+player.id = 1
 -- PLAYER CONTROL
 
 
@@ -31,3 +34,4 @@ end
 player:setBody(world, 150, 150, true)
 player:setShape("circle",10)
 player:setFixture()
+map.registerMapObject(player:getid())

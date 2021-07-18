@@ -6,6 +6,14 @@ require("player")
 
 local x, y = 0
 function love.load()
+    --map.construct()
+    local testent = entity:new({
+        level = 1,
+        position = {x = 400, y = 52}
+    })
+    entities[testent]:setProperty('texture',image.player2)
+    entities[testent].type = "enemy"
+    map.registerMapObject(testent)
 end
 
 
@@ -24,14 +32,5 @@ end
 
 function love.draw()
     love.graphics.draw(image.background, 1,1, 0,10,10)
-    local pos = entities[1]:getPosition()
-    local ent = entities[1]
-    love.graphics.draw(image.player, pos.x, pos.y,ent:getProperty("rotation"),1,1,32,32)
-    love.graphics.print(ent:getProperty("rotation"), 333,333)
-    if(vec)then
-    love.graphics.print(vec.x, 333,343)
-    love.graphics.print(opposite, 333,353)
-
-end
-    
+    map.hierarchicalRender()
 end
